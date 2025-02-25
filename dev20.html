@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      /*CSS position :static (default),absolute,relative,fixed ,sticky */
+        .box{
+            display: inline-block;
+            border: 2px solid red;
+            width: 150px;
+            height: 150px;
+            margin: 2px;
+        }
+        #box3{
+           /* relative:position the elements  to its normal position and leave a gap at its normal position */
+            /* position: relative; */
+
+            /* absolute:position the elements relativeto  the  position of its first parent */
+            /* position: absolute; */
+            /* fixed:position the elements relative to the browser window; */
+            /* position: fixed; */
+            position: sticky;
+            /* right: 4px; */
+             top: 3px;
+            /* left: 134px;  */
+            /* bottom: 2px; */
+            /* sticky: */
+
+        }
+        .container{
+            border: 2px solid black;
+            background-color: lightpink;
+            height: 3444px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+   
+    <div class="box" id="box1">1</div>
+    <div class="box" id="box2">2</div>
+    <div class="box" id="box3">chat with us</div>
+    <div class="box" id="box4">4</div>
+</div><div class="0"></div>
+</body>
+</html>
