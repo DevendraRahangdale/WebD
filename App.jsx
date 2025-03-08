@@ -1,37 +1,37 @@
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useMemo, useState } from 'react'
 import './App.css'
-import { decrement, increment,reset } from './features/Counter/counterSlice';
+
 function App() {
+ const [count,setCount]=useState(0);
+ const [input,setInput]=useState(0);
 
-  const count=useSelector((state)=> state.counter.value);
+ function expensivetask(num){
+  console.log("inside expensive task");
+  for(let i=0;i<=1000000000000;i++){}
+  return num*2;
+ }
 
-  const dispatch=useDispatch();
-
-
-
- function handleincrementclick(){
-      dispatch(increment());
-    }
-    function handledecrementclick(){
-      dispatch(decrement());
-    }
-    function handleresetclick(){
-      dispatch(reset());
-    }
+  let doublevalue=  useMemo(()=> expensivetask(input),[input]);
 
   return (
-   
-    <div className="container">
-      <button onClick={handleincrementclick}>+</button>
-      <p>Count:{count}</p>
-      <button onClick={handledecrementclick}>-</button>
-      <br />
-      <br />
-      <button onClick={handleresetclick}>Reset</button>
-    </div>
-     
-    
+    <>
+      <div>
+        <button onClick={()=>setCount(count+1)}>Increment</button>
+
+        <div>
+          count:{count}
+        </div>
+
+        <div>
+          Double:{doublevalue}
+        </div>
+
+        <input type="number" placeholder='enter the number' 
+        vlaue={input}
+        onChange={(e)=>setInput.target.value}/>
+      </div>
+    </>
   )
 }
 
