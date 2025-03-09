@@ -1,11 +1,36 @@
+var versions = require('./versions');
+var fullVersions = require('./full-versions');
+var chromiumVersions = require('./chromium-versions');
+var fullChromiumVersions = require('./full-chromium-versions');
 
-console.log("Namaste Duniya2");
+var electronToChromium = function (query) {
+  var number = getQueryString(query);
+  return number.split('.').length > 2 ? fullVersions[number] : versions[number] || undefined;
+};
 
-var a=5;
+var chromiumToElectron = function (query) {
+  var number = getQueryString(query);
+  return number.split('.').length > 2 ? fullChromiumVersions[number] : chromiumVersions[number] || undefined;
+};
 
+var electronToBrowserList = function (query) {
+  var number = getQueryString(query);
+  return versions[number] ? "Chrome >= " + versions[number] : undefined;
+};
 
-function solve(){
-    
-    console.log(a);
-}
-solve();
+var getQueryString = function (query) {
+  var number = query;
+  if (query === 1) { number = "1.0" }
+  if (typeof query === 'number') { number += ''; }
+  return number;
+};
+
+module.exports = {
+  versions: versions,
+  fullVersions: fullVersions,
+  chromiumVersions: chromiumVersions,
+  fullChromiumVersions: fullChromiumVersions,
+  electronToChromium: electronToChromium,
+  electronToBrowserList: electronToBrowserList,
+  chromiumToElectron: chromiumToElectron
+};
