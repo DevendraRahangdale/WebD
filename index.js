@@ -1,36 +1,41 @@
-var versions = require('./versions');
-var fullVersions = require('./full-versions');
-var chromiumVersions = require('./chromium-versions');
-var fullChromiumVersions = require('./full-chromium-versions');
+const express=require("express");
+const app=express();
+const port=8080;
 
-var electronToChromium = function (query) {
-  var number = getQueryString(query);
-  return number.split('.').length > 2 ? fullVersions[number] : versions[number] || undefined;
-};
+app.set("view engine","ejs");
 
-var chromiumToElectron = function (query) {
-  var number = getQueryString(query);
-  return number.split('.').length > 2 ? fullChromiumVersions[number] : chromiumVersions[number] || undefined;
-};
+app.get("/",(req,res)=>{
+    res.render("home.ejs");
 
-var electronToBrowserList = function (query) {
-  var number = getQueryString(query);
-  return versions[number] ? "Chrome >= " + versions[number] : undefined;
-};
 
-var getQueryString = function (query) {
-  var number = query;
-  if (query === 1) { number = "1.0" }
-  if (typeof query === 'number') { number += ''; }
-  return number;
-};
+});
+app.get("/ig/:username",(req,res)=>{
+    let {username}=req.params;
+ const instadata=require("./data.json");
+ const data=instadata[username];
 
-module.exports = {
-  versions: versions,
-  fullVersions: fullVersions,
-  chromiumVersions: chromiumVersions,
-  fullChromiumVersions: fullChromiumVersions,
-  electronToChromium: electronToChromium,
-  electronToBrowserList: electronToBrowserList,
-  chromiumToElectron: chromiumToElectron
-};
+ console.log(data);
+  
+
+    if(data){
+          res.render("instagram.ejs",{data});
+    }
+    else{
+        res.render("error.ejs");
+    }
+
+});
+
+
+app.get("/home",(req,res)=>{
+    res.send("Hello");
+});
+app.get("/rolldice",(req,res)=>{
+    let dicevalue=Math.floor(Math.random()*6)+1;
+    res.render("rolldice.ejs",{dicevalue});
+});
+
+
+app.listen(port,()=>{
+    console.log(`Listing on the port' ${port}`)
+})
